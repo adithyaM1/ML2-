@@ -1,22 +1,21 @@
-# =============================================================
-# AI–ML LAB PROGRAMS (Single File - Auto Run All Programs)
-# =============================================================
-
-print("\n======================================")
-print(" PROGRAM 1: FIND-S & CANDIDATE ELIMINATION")
-print("======================================\n")
-
+program 1 
+# FIND-S and Candidate Elimination Algorithm
 import pandas as pd
 
-# Default dataset
-data = pd.DataFrame([
-    ['Sunny', 'Warm', 'Normal', 'Strong', 'Warm', 'Same', 'Yes'],
-    ['Sunny', 'Warm', 'High', 'Strong', 'Warm', 'Same', 'Yes'],
-    ['Rainy', 'Cold', 'High', 'Strong', 'Warm', 'Change', 'No'],
-    ['Sunny', 'Warm', 'High', 'Strong', 'Cool', 'Change', 'Yes']
-], columns=['Sky', 'AirTemp', 'Humidity', 'Wind', 'Water', 'Forecast', 'EnjoySport'])
+print("Enter dataset CSV file path (or press Enter to use default sample): ")
+file_path = input().strip()
 
-print("Dataset:\n", data)
+if file_path:
+    data = pd.read_csv(file_path)
+else:
+    data = pd.DataFrame([
+        ['Sunny', 'Warm', 'Normal', 'Strong', 'Warm', 'Same', 'Yes'],
+        ['Sunny', 'Warm', 'High', 'Strong', 'Warm', 'Same', 'Yes'],
+        ['Rainy', 'Cold', 'High', 'Strong', 'Warm', 'Change', 'No'],
+        ['Sunny', 'Warm', 'High', 'Strong', 'Cool', 'Change', 'Yes']
+    ], columns=['Sky', 'AirTemp', 'Humidity', 'Wind', 'Water', 'Forecast', 'EnjoySport'])
+
+print("\nDataset:\n", data)
 
 attributes = data.columns[:-1]
 target = data.columns[-1]
@@ -35,9 +34,10 @@ def find_s_algorithm(data):
     return specific_h
 
 specific_hypothesis = find_s_algorithm(data)
-print("\nMost specific hypothesis (FIND-S):", specific_hypothesis)
+print("\n=== FIND-S Algorithm ===")
+print("Most specific hypothesis:", specific_hypothesis)
 
-# Candidate Elimination
+# Candidate Elimination Helpers
 def more_general(h1, h2):
     return all(x == '?' or x == y for x, y in zip(h1, h2))
 
@@ -60,6 +60,7 @@ def specialize_G(example, G, domains):
                         new_G.append(new_h)
     return new_G
 
+# Candidate Elimination Algorithm
 def candidate_elimination(data):
     domains = [list(data[attr].unique()) for attr in attributes]
     S = [['0'] * len(attributes)]
@@ -83,17 +84,11 @@ def candidate_elimination(data):
     return S, G
 
 S_final, G_final = candidate_elimination(data)
-print("\nFinal Specific Boundary (S):", S_final)
+print("\n=== Candidate Elimination Algorithm ===")
+print("Final Specific Boundary (S):", S_final)
 print("Final General Boundary (G):", G_final)
 
-
-# =============================================================
-# PROGRAM 2: BAGGING & BOOSTING
-# =============================================================
-print("\n======================================")
-print(" PROGRAM 2: BAGGING & BOOSTING")
-print("======================================\n")
-
+program 3 
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import BaggingClassifier, AdaBoostClassifier
@@ -103,9 +98,11 @@ from sklearn.metrics import accuracy_score
 X, y = load_iris(return_X_y=True)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
+# Bagging
 bag = BaggingClassifier(DecisionTreeClassifier(), n_estimators=50, random_state=42)
 bag.fit(X_train, y_train)
 
+# Boosting
 boost = AdaBoostClassifier(DecisionTreeClassifier(max_depth=1), n_estimators=50, random_state=42)
 boost.fit(X_train, y_train)
 
@@ -115,41 +112,28 @@ boost_acc = accuracy_score(y_test, boost.predict(X_test))
 print(f"Bagging Accuracy: {bag_acc:.2f}")
 print(f"Boosting Accuracy: {boost_acc:.2f}")
 
-
-# =============================================================
-# PROGRAM 3: BAYESIAN NETWORKS
-# =============================================================
-print("\n======================================")
-print(" PROGRAM 3: BAYESIAN NETWORK")
-print("======================================\n")
-
+program 7 
+import pandas as pd
 from pgmpy.models import DiscreteBayesianNetwork
 from pgmpy.estimators import MaximumLikelihoodEstimator
 from pgmpy.inference import VariableElimination
 
-data_bn = pd.DataFrame({
+data = pd.DataFrame({
     'Rain': ['Yes', 'Yes', 'No', 'No', 'Yes', 'No', 'Yes', 'No', 'No', 'Yes'],
     'Traffic': ['High', 'High', 'Low', 'Low', 'Low', 'Low', 'High', 'Low', 'High', 'High'],
     'Late': ['Yes', 'No', 'No', 'No', 'Yes', 'No', 'Yes', 'No', 'No', 'Yes']
 })
 
 model = DiscreteBayesianNetwork([('Rain', 'Traffic'), ('Traffic', 'Late')])
-model.fit(data_bn, estimator=MaximumLikelihoodEstimator)
+model.fit(data, estimator=MaximumLikelihoodEstimator)
 
 inference = VariableElimination(model)
 prob = inference.query(variables=['Late'], evidence={'Rain': 'Yes'})
-
 print(prob)
 
-
-# =============================================================
-# PROGRAM 4: SELF-ORGANIZING MAP (SOM)
-# =============================================================
-print("\n======================================")
-print(" PROGRAM 4: SELF-ORGANIZING MAP (SOM)")
-print("======================================\n")
-
-from minisom import MiniSom
+ program 5 
+ from minisom import MiniSom
+from sklearn.datasets import load_iris
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 
@@ -161,8 +145,4 @@ som.random_weights_init(X)
 som.train_random(X, num_iteration=100)
 
 win_map = np.array([som.winner(x) for x in X])
-print("Sample SOM neuron mappings:", win_map[:10])
-
-print("\n==============================")
-print(" ALL PROGRAMS EXECUTED")
-print("==============================")
+print("Sample SOM neuron mappings (first 10):\n", win_map[:10])
