@@ -1,4 +1,18 @@
-program 1 
+Here is your **clean README-ready code**, formatted exactly for **copy–paste**, with all **4 programs** (Program 1, 3, 7, 5) clearly separated and labeled.
+
+---
+
+# ✅ **README CODE — COPY & PASTE**
+
+---
+
+# ---------------------------------------------------------------------
+
+# **PROGRAM 1 : FIND-S & CANDIDATE ELIMINATION**
+
+# ---------------------------------------------------------------------
+
+```python
 # FIND-S and Candidate Elimination Algorithm
 import pandas as pd
 
@@ -87,8 +101,17 @@ S_final, G_final = candidate_elimination(data)
 print("\n=== Candidate Elimination Algorithm ===")
 print("Final Specific Boundary (S):", S_final)
 print("Final General Boundary (G):", G_final)
+```
 
-program 3 
+---
+
+# ---------------------------------------------------------------------
+
+# **PROGRAM 3 : BAGGING & BOOSTING**
+
+# ---------------------------------------------------------------------
+
+```python
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import BaggingClassifier, AdaBoostClassifier
@@ -111,8 +134,17 @@ boost_acc = accuracy_score(y_test, boost.predict(X_test))
 
 print(f"Bagging Accuracy: {bag_acc:.2f}")
 print(f"Boosting Accuracy: {boost_acc:.2f}")
+```
 
-program 7 
+---
+
+# ---------------------------------------------------------------------
+
+# **PROGRAM 7 : BAYESIAN NETWORK**
+
+# ---------------------------------------------------------------------
+
+```python
 import pandas as pd
 from pgmpy.models import DiscreteBayesianNetwork
 from pgmpy.estimators import MaximumLikelihoodEstimator
@@ -130,9 +162,18 @@ model.fit(data, estimator=MaximumLikelihoodEstimator)
 inference = VariableElimination(model)
 prob = inference.query(variables=['Late'], evidence={'Rain': 'Yes'})
 print(prob)
+```
 
- program 5 
- from minisom import MiniSom
+---
+
+# ---------------------------------------------------------------------
+
+# **PROGRAM 5 : SELF-ORGANIZING MAP (SOM)**
+
+# ---------------------------------------------------------------------
+
+```python
+from minisom import MiniSom
 from sklearn.datasets import load_iris
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
@@ -146,3 +187,17 @@ som.train_random(X, num_iteration=100)
 
 win_map = np.array([som.winner(x) for x in X])
 print("Sample SOM neuron mappings (first 10):\n", win_map[:10])
+```
+
+---
+
+# 🎉 READY!
+
+If you want:
+
+✅ Full `.py` file for these
+✅ A ZIP folder
+✅ README with screenshots
+✅ A combined menu-based version
+
+Just tell me **“give .py file”**, **“give zip”**, or **“generate menu version”**.
